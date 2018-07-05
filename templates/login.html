@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - API Wars{% endblock %}
+
+{% block page_content %}
+
+<h1 class="h1"> Login </h1>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+    <div class="alert alert-danger">
+        <p class="text-danger">{{ message }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+    <form action="/login" method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="pwd" name="pwd">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</ul>
+
+{% endblock %}

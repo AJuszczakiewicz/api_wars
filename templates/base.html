@@ -1,0 +1,31 @@
+{% extends 'bootstrap/base.html' %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+
+{% block navbar %}
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Planet List</a>
+        {% if session['logged_in'] %}
+        <a class="navbar-brand" href="{{ url_for('logout') }}">Log out</a>
+        <div class="nav navbar-nav navbar-right">
+            <p class="navbar-text"><strong>Logged in as {{session['username']}}</strong></p>
+        </div>
+        {% else %}
+        <a class="navbar-brand" href="{{ url_for('register') }}">Registration</a>
+        <a class="navbar-brand" href="{{ url_for('login') }}">Log in</a>
+        {% endif %}
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% block page_content %}
+
+    {% endblock %}
+</div>
+
+{% endblock %}

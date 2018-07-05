@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}API Wars{% endblock %}
+
+{% block page_content %}
+
+    {% set page = page|int %}
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <div id="modal" class="modal">
+        <div id="modal-content" class="modal-content">
+            <span class="close">&times;</span>
+            <table id="resident-data" class="table">
+            </table>
+        </div>
+
+    </div>
+    <h1 class="h1"> Star Wars universe planets </h1>
+    {% set page = page-1 %}
+    <form id="previous" action="{{ url_for('next_pages', page=page) }}">
+        {% set page = page+1 %}
+    </form>
+    {% set page = page+1 %}
+    <form id="next" action="{{ url_for('next_pages', page=page) }}">
+        {% set page = page-1 %}
+    </form>
+    {% if planets['previous'] == none %}
+        <button class="btn" id="previous" form="previous" disabled>Previous</button>
+    {% else %}
+        <button class="btn" id="previous" form="previous">Previous</button>
+    {% endif %}
+    {% if planets['next'] == none %}
+        <button class="btn" id="next" form="next" disabled>Next</button>
+    {% else %}
+        <button class="btn" id="next" form="next">Next</button>
+    {% endif %}
+    <table class="table table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Terrain</th>
+            <th>Surface water</th>
+            <th>Population</th>
+            <th>Population details</th>
+        </tr>
+        {% for planet in planets['results'] %}
+            <tr>
+                <td> {{ planet['name'] }}</td>
+                <td> {{ planet['diameter'] }} {% if planet['diameter'] != 'unknown' %} KM{%endif%}</td>
+                <td> {{ planet['climate'] }}</td>
+                <td> {{ planet['terrain'] }}</td>
+                <td> {{ planet['surface_water'] }}{% if planet['surface_water'] != 'unknown' %}%{% endif %}</td>
+                <td> {{ planet['population'] }}{% if planet['population'] != 'unknown' %} people{% endif %}</td>
+                <td>
+                    {% if (planet['residents'] == []) %}
+                        No known residents.
+                    {% else %}
+                        <button data-url="{{ planet['url'] }}" class="details"> Known residents</button>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
